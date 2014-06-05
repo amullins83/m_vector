@@ -2,6 +2,8 @@
 
 ##Summary
 
+Created with [Ceedling](http://throwtheswitch.org)!
+
 I decided to implement my own vector type for a Microchip PIC32 application, because:
 
 1. There does not appear to be a Microchip library with this functionality
