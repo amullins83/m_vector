@@ -35,8 +35,8 @@ MVector *m_vector_init(M_VECTOR_DATA *, size_t object_size, size_t max_count);
 #define m_vector_new(type) (m_vector_init((M_VECTOR_DATA *)calloc(sizeof(type), \
   M_VECTOR_DEFAULT_SIZE), sizeof(type), M_VECTOR_DEFAULT_SIZE))
 
-#define m_vector_sized_new(max_count) (m_vector_init((M_VECTOR_DATA *)calloc(sizeof(type), \
-  max_count), sizeof(type), (max_count))
+#define m_vector_sized_new(type, max_count) (m_vector_init((M_VECTOR_DATA *)calloc(sizeof(type), \
+  max_count), sizeof(type), (max_count)))
 
 void m_vector_delete(MVector *);
 void m_vector_set_clear_func(MVector *, MVectorClearFunction);
