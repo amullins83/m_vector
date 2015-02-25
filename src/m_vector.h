@@ -16,21 +16,24 @@
 
 */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define M_VECTOR_DEFAULT_SIZE 255
 #define M_VECTOR_DATA unsigned char
 
-typedef void (*MVectorClearFunction)(M_VECTOR_DATA *element_ptr);
+	typedef void(*MVectorClearFunction)(M_VECTOR_DATA *element_ptr);
 
-typedef struct _M_VECTOR
-{
-  size_t count;
-  size_t size;
-  size_t object_size;
-  MVectorClearFunction clear_func;  
-  M_VECTOR_DATA *data;
-} MVector;
+	typedef struct MVECTOR {
+		size_t count;
+		size_t size;
+		size_t object_size;
+		MVectorClearFunction clear_func;
+		M_VECTOR_DATA *data;
+	} MVector;
 
-MVector *m_vector_init(M_VECTOR_DATA *, size_t object_size, size_t max_count);
+	MVector *m_vector_init(M_VECTOR_DATA *data, size_t object_size, size_t max_count);
 
 #define m_vector_new(type) (m_vector_init((M_VECTOR_DATA *)calloc(sizeof(type), \
   M_VECTOR_DEFAULT_SIZE), sizeof(type), M_VECTOR_DEFAULT_SIZE))
@@ -38,14 +41,14 @@ MVector *m_vector_init(M_VECTOR_DATA *, size_t object_size, size_t max_count);
 #define m_vector_sized_new(type, max_count) (m_vector_init((M_VECTOR_DATA *)calloc(sizeof(type), \
   max_count), sizeof(type), (max_count)))
 
-void m_vector_delete(MVector *);
-void m_vector_set_clear_func(MVector *, MVectorClearFunction);
+	void m_vector_delete(MVector *);
+	void m_vector_set_clear_func(MVector *, MVectorClearFunction);
 
-MVector *_m_vector_internal_append(MVector *, const M_VECTOR_DATA *);
-MVector *_m_vector_internal_prepend(MVector *, const M_VECTOR_DATA *);
-MVector *_m_vector_internal_insert(MVector *, size_t, const M_VECTOR_DATA *);
+	void m_vector_remove_index(MVector *, size_t index);
 
-MVector *m_vector_remove_index(MVector *, size_t index);
+	void _m_vector_internal_append(MVector *, const M_VECTOR_DATA *);
+	void _m_vector_internal_prepend(MVector *, const M_VECTOR_DATA *);
+	void _m_vector_internal_insert(MVector *, size_t, const M_VECTOR_DATA *);
 
 #define m_vector_append_val(vector, value) ( \
   _m_vector_internal_append((vector), (const M_VECTOR_DATA *)&(value)))
@@ -58,5 +61,9 @@ MVector *m_vector_remove_index(MVector *, size_t index);
 
 #define m_vector_index(vector, type, index) (*(type *)((vector)->data + \
   (vector)->object_size*(index)))
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
